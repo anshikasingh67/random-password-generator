@@ -1,0 +1,138 @@
+HTML CODE
+------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🔐 Password Generator</h2>
+
+    <input type="text" id="password" placeholder="Generated Password" readonly>
+
+    <div class="options">
+        <label><input type="checkbox" id="uppercase" checked> Uppercase</label>
+        <label><input type="checkbox" id="lowercase" checked> Lowercase</label>
+        <label><input type="checkbox" id="numbers" checked> Numbers</label>
+        <label><input type="checkbox" id="symbols" checked> Symbols</label>
+    </div>
+
+    <button onclick="generatePassword()">Generate</button>
+    <button class="copy-btn" onclick="copyPassword()">Copy</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+-----------
+CSS CODE
+----------
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 320px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #667eea;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 5px;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.copy-btn {
+    background: #48bb78;
+}
+
+.copy-btn:hover {
+    background: #38a169;
+}
+
+.options {
+    text-align: left;
+    margin: 15px 0;
+}
+
+.options label {
+    display: block;
+    margin: 5px 0;
+}
+
+--------
+JS CODE
+--------
+function generatePassword() {
+    let upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let lower = "abcdefghijklmnopqrstuvwxyz";
+    let number = "0123456789";
+    let symbol = "!@#$%^&*()_+";
+
+    let allChars = "";
+
+    if (document.getElementById("uppercase").checked) allChars += upper;
+    if (document.getElementById("lowercase").checked) allChars += lower;
+    if (document.getElementById("numbers").checked) allChars += number;
+    if (document.getElementById("symbols").checked) allChars += symbol;
+
+    if (allChars === "") {
+        alert("Select at least one option!");
+        return;
+    }
+
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+        password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+    }
+
+    document.getElementById("password").value = password;
+}
+
+function copyPassword() {
+    let passField = document.getElementById("password");
+    passField.select();
+    document.execCommand("copy");
+    alert("Password Copied!");
+}
